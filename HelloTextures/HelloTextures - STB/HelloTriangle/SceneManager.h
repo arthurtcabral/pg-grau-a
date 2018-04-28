@@ -26,52 +26,9 @@ public:
 	void render();
 	void run();
 	void finish();
-
-
-	// scene
-	void setupScene(GLfloat matrixPosition [4][2]);
 	void setupCamera2D();
-	void setupTexture(char* imagePath); //apenas mostra como criar uma textura
+
 private:
-
-	GLfloat marioX, marioY;
-
-	GLfloat matrixPositionsMarioUp[4][2] = {
-		{ 6.0f/6.0f, 2.0f/2.0f}, //top right
-		{ 6.0f/6.0f, 1.0f/2.0f}, //bottom right
-		{ 5.0f/6.0f, 1.0f/2.0f }, //bottom left
-		{ 5.0f/6.0f, 2.0f/2.0f } //top left
-	};
-
-	GLfloat matrixPositionsMarioForward[4][2] = {
-		{ 3.0f/6.0f, 1.0f/2.0f }, //top right
-		{ 3.0f/6.0f, 0.0f/2.0f }, //bottom right
-		{ 2.0f/6.0f, 0.0f/2.0f }, //bottom left
-		{ 2.0f/6.0f, 1.0f/2.0f } //top left
-	};
-
-	GLfloat matrixPositionsMarioDown[4][2] = {
-		{ 5.0f/6.0f, 1.0f/2.0f }, //top right
-		{ 5.0f/6.0f, 0.0f/2.0f }, //bottom right
-		{ 4.0f/6.0f, 0.0f/2.0f }, //bottom left
-		{ 4.0f/6.0f, 1.0f/2.0f } //top left
-	};
-
-	//GLfloat parallaxFrontX, parallaxBackX;
-
-	//GLfloat matrixParallaxFront[4][2] = {
-	//	{ 5.0f / 6.0f, 1.0f / 2.0f }, //top right
-	//	{ 5.0f / 6.0f, 0.0f / 2.0f }, //bottom right
-	//	{ 4.0f / 6.0f, 0.0f / 2.0f }, //bottom left
-	//	{ 4.0f / 6.0f, 1.0f / 2.0f } //top left
-	//};
-
-	//GLfloat matrixParallaxBack[4][2] = {
-	//	{ 5.0f / 6.0f, 1.0f / 2.0f }, //top right
-	//	{ 5.0f / 6.0f, 0.0f / 2.0f }, //bottom right
-	//	{ 4.0f / 6.0f, 0.0f / 2.0f }, //bottom left
-	//	{ 4.0f / 6.0f, 1.0f / 2.0f } //top left
-	//};
 
 	//GFLW window
 	GLFWwindow *window;
@@ -90,6 +47,15 @@ private:
 
 	//Texture index
 	unsigned int texture;
+
+	//Start with 1up
+	int numberOfUps = 1;
+
+	//Win the game
+	bool win = false;
+
+	//Game over
+	bool gameOver = false;
 
 };
 
