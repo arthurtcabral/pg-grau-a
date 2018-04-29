@@ -11,33 +11,33 @@ Character *mario = new Character;
 Character *up = new Character;
 
 
-GLfloat matrixPositionsMarioUp[4][2] = {
-	{ 6.0f / 6.0f, 2.0f / 2.0f }, //top right
-	{ 6.0f / 6.0f, 1.0f / 2.0f }, //bottom right
-	{ 5.0f / 6.0f, 1.0f / 2.0f }, //bottom left
-	{ 5.0f / 6.0f, 2.0f / 2.0f } //top left
-};
-
-GLfloat matrixPositionsMarioForward[4][2] = {
-	{ 3.0f / 6.0f, 1.0f / 2.0f }, //top right
-	{ 3.0f / 6.0f, 0.0f / 2.0f }, //bottom right
-	{ 2.0f / 6.0f, 0.0f / 2.0f }, //bottom left
-	{ 2.0f / 6.0f, 1.0f / 2.0f } //top left
-};
-
-GLfloat matrixPositionsMarioDown[4][2] = {
-	{ 5.0f / 6.0f, 1.0f / 2.0f }, //top right
-	{ 5.0f / 6.0f, 0.0f / 2.0f }, //bottom right
-	{ 4.0f / 6.0f, 0.0f / 2.0f }, //bottom left
-	{ 4.0f / 6.0f, 1.0f / 2.0f } //top left
-};
-
-GLfloat matrixPositions1Up[4][2] = {
-	{ 1.0f, 1.0f }, //top right
-	{ 1.0f, 0.0f }, //bottom right
-	{ 0.0f, 0.0f }, //bottom left
-	{ 0.0f, 1.0f } //top left
-};
+//GLfloat matrixPositionsMarioUp[4][2] = {
+//	{ 6.0f / 6.0f, 2.0f / 2.0f }, //top right
+//	{ 6.0f / 6.0f, 1.0f / 2.0f }, //bottom right
+//	{ 5.0f / 6.0f, 1.0f / 2.0f }, //bottom left
+//	{ 5.0f / 6.0f, 2.0f / 2.0f } //top left
+//};
+//
+//GLfloat matrixPositionsMarioForward[4][2] = {
+//	{ 3.0f / 6.0f, 1.0f / 2.0f }, //top right
+//	{ 3.0f / 6.0f, 0.0f / 2.0f }, //bottom right
+//	{ 2.0f / 6.0f, 0.0f / 2.0f }, //bottom left
+//	{ 2.0f / 6.0f, 1.0f / 2.0f } //top left
+//};
+//
+//GLfloat matrixPositionsMarioDown[4][2] = {
+//	{ 5.0f / 6.0f, 1.0f / 2.0f }, //top right
+//	{ 5.0f / 6.0f, 0.0f / 2.0f }, //bottom right
+//	{ 4.0f / 6.0f, 0.0f / 2.0f }, //bottom left
+//	{ 4.0f / 6.0f, 1.0f / 2.0f } //top left
+//};
+//
+//GLfloat matrixPositions1Up[4][2] = {
+//	{ 1.0f, 1.0f }, //top right
+//	{ 1.0f, 0.0f }, //bottom right
+//	{ 0.0f, 0.0f }, //bottom left
+//	{ 0.0f, 1.0f } //top left
+//};
 
 SceneManager::SceneManager()
 {
@@ -72,8 +72,8 @@ void SceneManager::initializeGraphics()
 
 	addShader("../shaders/transformations.vs", "../shaders/transformations.frag");
 
-	mario->initialize(0.0f, 0.0f, 0.2f, 0.2f, matrixPositionsMarioForward, "../textures/mariokart2.png");
-	up->initialize(0.5f, 0.8f, 0.1f, 0.1f, matrixPositions1Up, "../textures/1up.png");
+	mario->initialize(0.0f, 0.0f, 0.2f, 0.2f, 2, "../textures/mariokart2.png");
+	up->initialize(0.5f, 0.8f, 0.1f, 0.1f, 4, "../textures/1up.png");
 
 	resized = true; //para entrar no setup da câmera na 1a vez
 
@@ -112,25 +112,25 @@ void SceneManager::do_movement()
 {
 	if (keys[GLFW_KEY_UP])
 	{
-		mario->matrixPositions[4][2] = matrixPositionsMarioUp[4][2];
+		mario->spriteToRender = 1;
 		mario->positionY += 0.001f;
 	}
 
 	if (keys[GLFW_KEY_DOWN])
 	{
-		mario->matrixPositions[4][2] = matrixPositionsMarioDown[4][2];
+		mario->spriteToRender = 3;
 		mario->positionY -= 0.001f;
 	}
 
 	if (keys[GLFW_KEY_LEFT])
 	{
-		mario->matrixPositions[4][2] = matrixPositionsMarioForward[4][2];
+		mario->spriteToRender = 2;
 		mario->positionX -= 0.0005f;
 	}
 
 	if (keys[GLFW_KEY_RIGHT])
 	{
-		mario->matrixPositions[4][2] = matrixPositionsMarioForward[4][2];
+		mario->spriteToRender = 2;
 		mario->positionX += 0.001f;
 	}
 

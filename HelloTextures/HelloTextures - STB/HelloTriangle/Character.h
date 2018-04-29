@@ -25,9 +25,10 @@ public:
 	GLfloat positionX;
 	GLfloat positionY;
 
-	GLfloat matrixPositions[4][2];
+	int spriteToRender;
 
-	void initialize(GLfloat x, GLfloat y, GLfloat widthImage, GLfloat heightImage, GLfloat matrix[4][2], char* texture);
+	//spriteToRender: 1 - MarioUp | 2 - MarioForward | 3 - MarioDown | 4 - 1UP
+	void initialize(GLfloat x, GLfloat y, GLfloat widthImage, GLfloat heightImage, int spt, char* texture);
 	void render(GLint attrModel, GLint attrTexture);
 	bool conflictedWith(Character character);
 
