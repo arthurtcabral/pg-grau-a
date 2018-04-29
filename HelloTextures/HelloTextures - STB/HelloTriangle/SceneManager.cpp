@@ -8,9 +8,12 @@ static bool resized;
 static GLuint width, height;
 
 Character *mario = new Character;
-Character *mario2 = new Character;
 Character *up = new Character;
-
+Character *grassFront = new Character;
+Character *grass = new Character;
+Character *sky = new Character;
+Character *youWin = new Character;
+bool hasAlreadyConflicted = false;
 
 //GLfloat matrixPositionsMarioUp[4][2] = {
 //	{ 6.0f / 6.0f, 2.0f / 2.0f }, //top right
@@ -64,7 +67,7 @@ void SceneManager::initializeGraphics()
 	glfwSetKeyCallback(window, key_callback);
 
 	glfwSetWindowSizeCallback(window, resize);
-	
+
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
@@ -73,8 +76,12 @@ void SceneManager::initializeGraphics()
 
 	addShader("../shaders/transformations.vs", "../shaders/transformations.frag");
 
-	mario->initialize(0.0f, 0.0f, 0.2f, 0.2f, 2, "../textures/mariokart2.png");
-	up->initialize(0.5f, 0.8f, 0.1f, 0.1f, 4, "../textures/1up.png");
+	grass->initialize(-0.7f, -0.5f, 4.8f, 1.0f, "../textures/grass.png");
+	up->initialize(0.9f, -0.8f, 0.1f, 0.1f, 4, "../textures/1up.png");
+	mario->initialize(-0.9f, -0.8f, 0.2f, 0.2f, 2, "../textures/mariokart2.png");
+	grassFront->initialize(-0.7f, -0.5f, 5.8f, 1.0f, "../textures/frontgrass.png");
+	sky->initialize(-0.7f, -0.5f, 3.5f, 2.0f, "../textures/sky.png");
+	youWin->initialize(-0.7f, -0.5f, 3.5f, 2.0f, "../textures/youwin.png");
 
 	resized = true; //para entrar no setup da câmera na 1a vez
 
@@ -82,7 +89,7 @@ void SceneManager::initializeGraphics()
 
 void SceneManager::addShader(string vFilename, string fFilename)
 {
-	shader = new Shader (vFilename.c_str(), fFilename.c_str());
+	shader = new Shader(vFilename.c_str(), fFilename.c_str());
 }
 
 
@@ -114,25 +121,32 @@ void SceneManager::do_movement()
 	if (keys[GLFW_KEY_UP])
 	{
 		mario->spriteToRender = 1;
-		mario->positionY += 0.001f;
+		mario->positionY += 0.0005f;
 	}
 
-	if (keys[GLFW_KEY_DOWN])
-	{
+	if (keys[GLFW_KEY_DOWN]) {
 		mario->spriteToRender = 3;
-		mario->positionY -= 0.001f;
+		mario->positionY -= 0.0005f;
 	}
 
 	if (keys[GLFW_KEY_LEFT])
 	{
 		mario->spriteToRender = 2;
 		mario->positionX -= 0.0005f;
+		grass->positionX += 0.00001f;
+		grassFront->positionX += 0.00005f;
+		sky->positionX -= 0.000005f;
+		//up->positionX += 0.0005f;
 	}
 
 	if (keys[GLFW_KEY_RIGHT])
 	{
 		mario->spriteToRender = 2;
-		mario->positionX += 0.001f;
+		mario->positionX += 0.0005f;
+		grass->positionX -= 0.00001f;
+		grassFront->positionX -= 0.00005f;
+		sky->positionX -= 0.000005f;
+		//up->positionX -= 0.0005f;
 	}
 
 	if (keys[GLFW_KEY_ESCAPE])
@@ -159,20 +173,25 @@ void SceneManager::render()
 		resized = false;
 	}
 
-	mario->render(modelLoc, textureLoc);
+	sky->render(modelLoc, textureLoc);
+	grass->render(modelLoc, textureLoc);
 	up->render(modelLoc, textureLoc);
+	mario->render(modelLoc, textureLoc);
+	grassFront->render(modelLoc, textureLoc);
 
-	if (mario -> conflictedWith(*up))
+	if (!hasAlreadyConflicted)
 	{
-		numberOfUps++;
-		win = numberOfUps == 2;
+		if (mario->conflictedWith(*up))
+		{
+			numberOfUps++;
+			hasAlreadyConflicted = true;
+		}
 	}
 
-	if (win)
+	if (hasAlreadyConflicted)
 	{
-		finish();
+		youWin->render(modelLoc, textureLoc);
 	}
-
 }
 
 void SceneManager::run()
@@ -180,17 +199,13 @@ void SceneManager::run()
 	//GAME LOOP
 	while (!glfwWindowShouldClose(window))
 	{
-		
-		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
+
 		glfwPollEvents();
 
-		//Update method(s)
 		do_movement();
 
-		//Render scene
 		render();
-		
-		// Swap the screen buffers
+
 		glfwSwapBuffers(window);
 
 	}

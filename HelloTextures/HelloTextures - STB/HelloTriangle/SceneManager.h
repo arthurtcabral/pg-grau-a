@@ -51,11 +51,5 @@ private:
 	//Start with 1up
 	int numberOfUps = 1;
 
-	//Win the game
-	bool win = false;
-
-	//Game over
-	bool gameOver = false;
-
 };
 

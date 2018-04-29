@@ -9,6 +9,19 @@ Character::~Character()
 }
 
 //spriteToRender: 1 - MarioUp | 2 - MarioForward | 3 - MarioDown | 4 - 1UP
+void Character::initialize(GLfloat x, GLfloat y, GLfloat widthImage, GLfloat heightImage, char* texture)
+{
+	textureFile = texture;
+	positionX = x;
+	positionY = y;
+	width = widthImage;
+	heigth = heightImage;
+
+	setupScene();
+	setupTexture();
+}
+
+//spriteToRender: 1 - MarioUp | 2 - MarioForward | 3 - MarioDown | 4 - 1UP
 void Character::initialize(GLfloat x, GLfloat y, GLfloat widthImage, GLfloat heightImage, int spt, char* texture)
 {
 	textureFile = texture;
@@ -39,7 +52,7 @@ void Character::render(GLint attrModel, GLint attrTexture)
 }
 
 bool Character::conflictedWith(Character character) {
-	return (abs(((positionY + 0.05f) - character.positionY)) < 0.01f) &&
+	return (abs(((positionY) - character.positionY)) < 0.01f) &&
 		(positionX <= (character.positionX + character.width)) &&
 		((positionX + width) >= character.positionX);
 }
@@ -75,13 +88,13 @@ void Character::setupScene()
 		-width,  heigth, 0.0f,  0.0f, 1.0f,  // top left 
 	};
 
-	//float vertices[] = {
-	//	// positions         // texture coords
-	//	width,  heigth, 0.0f,   matrixPositions[0][0], matrixPositions[0][1], // top right
-	//	width, -heigth, 0.0f,   matrixPositions[1][0], matrixPositions[1][1], // bottom right
-	//	-width, -heigth, 0.0f,  matrixPositions[2][0], matrixPositions[2][1], // bottom left
-	//	-width,  heigth, 0.0f,  matrixPositions[3][0], matrixPositions[3][1],  // top left 
-	//};
+	float verticesParalax[] = {
+		// positions         // texture coords
+		positionX + width, positionY + heigth, 0.0f,   1.0f, 1.0f, // top right
+		positionX + width, positionY, 0.0f,   1.0f, 0.0f, // bottom right
+		positionX, positionY, 0.0f,  0.0f, 0.0f, // bottom left
+		positionX, positionY + heigth, 0.0f,  0.0f, 1.0f  // top left 
+	};
 
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
@@ -109,6 +122,10 @@ void Character::setupScene()
 	}
 	else if (spriteToRender == 4) {
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices1Up), vertices1Up, GL_STATIC_DRAW);
+	}
+	else 
+	{
+		glBufferData(GL_ARRAY_BUFFER, sizeof(verticesParalax), verticesParalax, GL_STATIC_DRAW);
 	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -149,6 +166,5 @@ void Character::setupTexture()
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glActiveTexture(GL_TEXTURE0);
-
 
 }
