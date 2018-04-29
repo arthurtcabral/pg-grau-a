@@ -8,6 +8,7 @@ static bool resized;
 static GLuint width, height;
 
 Character *mario = new Character;
+Character *mario2 = new Character;
 Character *up = new Character;
 
 
@@ -163,7 +164,6 @@ void SceneManager::render()
 
 	if (mario -> conflictedWith(*up))
 	{
-		//TODO: Alterar para == 3.
 		numberOfUps++;
 		win = numberOfUps == 2;
 	}
