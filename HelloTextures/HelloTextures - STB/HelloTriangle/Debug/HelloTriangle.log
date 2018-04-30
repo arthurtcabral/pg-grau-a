@@ -1,4 +1,4 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (HelloTriangle.vcxproj, Transforms.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  SceneManager.cpp
+  Character.cpp
   HelloTriangle.vcxproj -> C:\Users\Arthur\Desktop\Arthur\UNISINOS\5 Semestre\Processamento Gráfico\HelloTextures\HelloTextures - STB\Debug\MarioKart.exe
   HelloTriangle.vcxproj -> C:\Users\Arthur\Desktop\Arthur\UNISINOS\5 Semestre\Processamento Gráfico\HelloTextures\HelloTextures - STB\Debug\MarioKart.pdb (Partial PDB)

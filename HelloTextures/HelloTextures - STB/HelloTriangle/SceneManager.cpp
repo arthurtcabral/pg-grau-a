@@ -121,18 +121,18 @@ void SceneManager::do_movement()
 	if (keys[GLFW_KEY_UP])
 	{
 		mario->spriteToRender = 1;
-		mario->positionY += 0.0005f;
+		mario->positionY += 0.001f;
 	}
 
 	if (keys[GLFW_KEY_DOWN]) {
 		mario->spriteToRender = 3;
-		mario->positionY -= 0.0005f;
+		mario->positionY -= 0.001f;
 	}
 
 	if (keys[GLFW_KEY_LEFT])
 	{
 		mario->spriteToRender = 2;
-		mario->positionX -= 0.0005f;
+		mario->positionX -= 0.001f;
 		grass->positionX += 0.00001f;
 		grassFront->positionX += 0.00005f;
 		sky->positionX -= 0.000005f;
@@ -142,7 +142,7 @@ void SceneManager::do_movement()
 	if (keys[GLFW_KEY_RIGHT])
 	{
 		mario->spriteToRender = 2;
-		mario->positionX += 0.0005f;
+		mario->positionX += 0.001f;
 		grass->positionX -= 0.00001f;
 		grassFront->positionX -= 0.00005f;
 		sky->positionX -= 0.000005f;

@@ -52,7 +52,7 @@ void Character::render(GLint attrModel, GLint attrTexture)
 }
 
 bool Character::conflictedWith(Character character) {
-	return (abs(((positionY) - character.positionY)) < 0.01f) &&
+	return (abs(((positionY) - character.positionY)) < 0.3f) &&
 		(positionX <= (character.positionX + character.width)) &&
 		((positionX + width) >= character.positionX);
 }
