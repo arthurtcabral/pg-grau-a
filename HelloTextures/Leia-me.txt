@@ -1,0 +1,8 @@
+Autores:
+
+Arthur Tassinari Cabral
+Leonardo Broch de Morais
+
+Trabalho apresentado para a disciplina de Processamento Gráfico.
+
+O objetivo do jogo é fazer o Mário, em seu kart, encostar na UP.
